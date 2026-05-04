@@ -182,6 +182,9 @@ export default function Home() {
   const [conversationId, setConversationId] = useState('');
   const [totalPipelineMs, setTotalPipelineMs] = useState<number | null>(null);
   const [pipelineExpanded, setPipelineExpanded] = useState(false);
+  const [chatHeight, setChatHeight] = useState(320);
+  const dragStartY = useRef<number | null>(null);
+  const dragStartHeight = useRef<number>(320);
   const pipelineStartAtRef = useRef<number>(0);
   const handleChat = async () => {
     if (!chatInput.trim() || isChatLoading) return;
@@ -847,11 +850,31 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="h-px bg-zinc-800 shrink-0" />
+            {/* Drag handle */}
+            <div
+              className="h-1.5 shrink-0 flex items-center justify-center cursor-row-resize group select-none bg-zinc-900 hover:bg-zinc-800 border-t border-b border-zinc-800 transition-colors"
+              onMouseDown={(e) => {
+                dragStartY.current = e.clientY;
+                dragStartHeight.current = chatHeight;
+                const onMove = (ev: MouseEvent) => {
+                  if (dragStartY.current === null) return;
+                  const delta = dragStartY.current - ev.clientY;
+                  setChatHeight(Math.min(600, Math.max(120, dragStartHeight.current + delta)));
+                };
+                const onUp = () => {
+                  dragStartY.current = null;
+                  window.removeEventListener('mousemove', onMove);
+                  window.removeEventListener('mouseup', onUp);
+                };
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('mouseup', onUp);
+              }}
+            >
+              <div className="w-8 h-0.5 rounded-full bg-zinc-700 group-hover:bg-zinc-500 transition-colors" />
+            </div>
 
-            {/* Chat panel — fixed height */}
-            <div className="h-[320px] shrink-0">
+            {/* Chat panel — resizable */}
+            <div className="shrink-0" style={{ height: chatHeight }}>
               <ChatPanel
                 messages={messages}
                 isChatLoading={isChatLoading}
