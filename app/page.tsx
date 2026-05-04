@@ -460,9 +460,19 @@ export default function Home() {
               ) : (
                 <div className="space-y-6">
                   <div className="space-y-3">
-                    <label className="text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">
-                      Supabase Project ID
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">
+                        Supabase Project ID
+                      </label>
+                      <a
+                        href="https://supabase.com/dashboard/project/_/settings/general"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] text-rose-500/70 hover:text-rose-400 transition-colors flex items-center gap-1 font-mono"
+                      >
+                        Where to find it ↗
+                      </a>
+                    </div>
                     <input
                       type="url"
                       value={projectRef}
@@ -470,12 +480,25 @@ export default function Home() {
                       placeholder="gnwfmrklkzohbyfvarmt"
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus-visible:border-rose-500/40 focus-visible:ring-1 focus-visible:ring-rose-500/30 transition-all font-mono"
                     />
+                    <p className="text-[11px] text-zinc-600 leading-relaxed">
+                      Found in <span className="font-mono text-zinc-500">Settings → General → Reference ID</span>
+                    </p>
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] text-zinc-500 uppercase tracking-widest flex items-center gap-2 font-bold">
-                      <span>Service Role Key</span>
-                      <LockIcon />
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="text-[10px] text-zinc-500 uppercase tracking-widest flex items-center gap-2 font-bold">
+                        <span>Secret Key</span>
+                        <LockIcon />
+                      </label>
+                      <a
+                        href="https://supabase.com/dashboard/project/_/settings/api-keys"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] text-rose-500/70 hover:text-rose-400 transition-colors flex items-center gap-1 font-mono"
+                      >
+                        Where to find it ↗
+                      </a>
+                    </div>
                     <div className="relative">
                       <input
                         type="password"
@@ -485,7 +508,15 @@ export default function Home() {
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus-visible:border-rose-500/40 focus-visible:ring-1 focus-visible:ring-rose-500/30 transition-all font-mono pr-10"
                       />
                     </div>
-                    <p className="text-[10px] text-zinc-600 mt-2 flex items-center gap-1.5 leading-relaxed">
+                    <div className="rounded-md border border-zinc-800 bg-zinc-900/60 px-3 py-2.5 space-y-1.5">
+                      <p className="text-[10px] text-zinc-400 font-semibold uppercase tracking-widest">How to get your Secret Key</p>
+                      <ol className="text-[11px] text-zinc-500 space-y-1 list-none">
+                        <li className="flex gap-2"><span className="text-rose-500 font-mono shrink-0">1.</span>Open your project in the <span className="text-zinc-400">Supabase Dashboard</span></li>
+                        <li className="flex gap-2"><span className="text-rose-500 font-mono shrink-0">2.</span>Go to <span className="text-zinc-400 font-mono">Settings → API</span></li>
+                        <li className="flex gap-2"><span className="text-rose-500 font-mono shrink-0">3.</span>Under <span className="text-zinc-400 font-mono">Project API keys</span>, copy the <span className="text-zinc-400 font-mono">Secret key</span></li>
+                      </ol>
+                    </div>
+                    <p className="text-[10px] text-zinc-600 flex items-center gap-1.5 leading-relaxed">
                       <LockIcon />
                       Used only for this request — never stored or logged.
                     </p>
