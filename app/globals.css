@@ -1,26 +1,139 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
+/* ─── Base tokens (dark-mode only) ──────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --bg-base:         #09090b; /* zinc-950 */
+  --bg-surface:      #111113; /* slightly lighter than base */
+  --bg-raised:       #18181b; /* zinc-900 */
+  --bg-overlay:      #1c1c1f; /* zinc-800-ish */
+
+  /* Borders */
+  --border-subtle:   #27272a; /* zinc-800 */
+  --border-muted:    #1c1c1f;
+
+  /* Text */
+  --text-primary:    #fafafa; /* zinc-50 */
+  --text-secondary:  #a1a1aa; /* zinc-400 */
+  --text-muted:      #52525b; /* zinc-600 */
+  --text-faint:      #3f3f46; /* zinc-700 */
+
+  /* Accent — red, not blue, not purple */
+  --accent:          #f43f5e; /* rose-500: warmer than pure red */
+  --accent-hover:    #fb7185; /* rose-400 */
+  --accent-dim:      #be123c; /* rose-700 */
+  --accent-muted:    rgba(244, 63, 94, 0.10);
+  --accent-glow:     rgba(244, 63, 94, 0.20);
+
+  /* Semantic */
+  --success:         #22c55e; /* green-500 */
+  --success-muted:   rgba(34, 197, 94, 0.10);
+  --warning:         #f59e0b; /* amber-500 */
+  --error:           #f43f5e;
+  --error-muted:     rgba(244, 63, 94, 0.10);
 }
 
+/* ─── Tailwind v4 theme mappings ─────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Surface colors available as bg-surface, text-surface, etc. */
+  --color-base:          var(--bg-base);
+  --color-surface:       var(--bg-surface);
+  --color-raised:        var(--bg-raised);
+  --color-overlay:       var(--bg-overlay);
+
+  /* Accent utilities: bg-accent, text-accent, border-accent */
+  --color-accent:        var(--accent);
+  --color-accent-hover:  var(--accent-hover);
+  --color-accent-dim:    var(--accent-dim);
+
+  /* Semantic utilities */
+  --color-ok:            var(--success);
+  --color-warn:          var(--warning);
+
+  /* ── Animation definitions ─────────────────────────────────────────────── */
+  /* Streaming text cursor — blink */
+  --animate-cursor:      cursor-blink 1.1s ease-in-out infinite;
+  /* Active pipeline step — ring pulse */
+  --animate-step-glow:   step-glow 2s ease-in-out infinite;
+  /* Message enter — slide up + fade */
+  --animate-msg-in:      msg-in 180ms ease-out both;
+  /* Generic fade-in */
+  --animate-fade-in:     fade-in 200ms ease-out both;
+  /* Shine sweep on button hover */
+  --animate-shine:       shine 1.5s infinite;
+  /* Gradient sweep for active step bar */
+  --animate-step-bar:    step-bar 1.8s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes step-glow {
+  0%, 100% { box-shadow: 0 0 0 0   var(--accent-glow); }
+  50%       { box-shadow: 0 0 0 6px transparent; }
+}
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shine {
+  from { transform: translateX(-100%) skewX(-12deg); }
+  to   { transform: translateX(200%) skewX(-12deg);  }
+}
+
+@keyframes step-bar {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(500%); }
+}
+
+/* ─── @utility helpers ───────────────────────────────────────────────────── */
+@utility animate-shine {
+  animation: shine 1.5s infinite;
+}
+
+/* ─── Base styles ────────────────────────────────────────────────────────── */
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* ─── Global focus ring ──────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ─── Thin scrollbar utility — add to overflow-auto/y-auto containers ────── */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 transparent;
+}
+.scrollbar-thin::-webkit-scrollbar        { width: 6px; height: 6px; }
+.scrollbar-thin::-webkit-scrollbar-track  { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb  { background: #3f3f46; border-radius: 3px; }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #52525b; }
