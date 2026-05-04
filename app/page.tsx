@@ -17,7 +17,7 @@ const sqlTheme: Record<string, React.CSSProperties> = {
     margin: '0',
     padding: '24px',
     fontSize: '13px',
-    lineHeight: '1.6',
+    lineHeight: '1.5rem',
     fontFamily: 'var(--font-geist-mono), monospace',
   },
   'code[class*="language-"]': {
@@ -436,15 +436,11 @@ export default function Home() {
                     <label className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">
                       SQL Schema
                     </label>
-                    {sqlSchema.length > 0 && (
-                      <span className="text-[10px] text-zinc-700 font-mono">
-                        {sqlSchema.split('\n').length}L · {sqlSchema.length}C
-                      </span>
-                    )}
+                    
                   </div>
                   <div className="flex-1 flex rounded-lg border border-zinc-800 bg-zinc-950 overflow-hidden focus-within:border-rose-500/40 focus-within:ring-1 focus-within:ring-rose-500/30 transition-all shadow-inner">
                     <div className="flex-none w-12 py-4 pl-2 pr-3 text-right bg-zinc-900 border-r border-zinc-800 select-none overflow-hidden">
-                      <pre className="text-zinc-700 text-xs font-mono leading-relaxed pointer-events-none">
+                      <pre className="text-zinc-700 text-sm font-mono pointer-events-none m-0 p-0" style={{ lineHeight: '1.5rem' }}>
                         {formatLineNumbers(sqlSchema)}
                       </pre>
                     </div>
@@ -454,6 +450,7 @@ export default function Home() {
                       placeholder={`CREATE TABLE posts (\n  id uuid PRIMARY KEY,\n  user_id uuid REFERENCES auth.users,\n  title text\n);`}
                       className="flex-1 bg-transparent p-4 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none resize-none leading-relaxed font-mono scrollbar-thin"
                       spellCheck="false"
+                      style={{ lineHeight: '1.5rem' }}
                     />
                   </div>
                 </div>
@@ -818,7 +815,7 @@ export default function Home() {
                   {/* Line numbers — sticky so they stay visible on horizontal scroll */}
                   <div className="w-14 shrink-0 sticky left-0 z-10 bg-[#0d0d0d] border-r border-zinc-800/50 pt-6 pb-6 select-none">
                     {output.split('\n').map((_, i) => (
-                      <div key={i} className="font-mono text-[11px] text-zinc-700 text-right pr-3 leading-[1.6]">
+                      <div key={i} className="font-mono text-[11px] text-zinc-700 text-right pr-3" style={{ lineHeight: '1.5rem' }}>
                         {i + 1}
                       </div>
                     ))}
@@ -833,7 +830,7 @@ export default function Home() {
                         margin: 0,
                         padding: '24px',
                         fontSize: '13px',
-                        lineHeight: '1.6',
+                        lineHeight: '1.5rem',
                         whiteSpace: 'pre',
                         overflowX: 'visible',
                         minWidth: '100%',
